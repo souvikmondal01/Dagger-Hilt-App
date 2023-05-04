@@ -13,9 +13,9 @@ interface One {
     fun getName()
 }
 
-class ImpOne @Inject constructor() : One {
+class ImpOne @Inject constructor(private val name: String) : One {
     override fun getName() {
-        Log.d("CAR", "My name is Souvik Mondal")
+        Log.d("CAR", "My name is $name")
     }
 }
 
@@ -44,5 +44,11 @@ class AppModule() {
 
     @Provides
     @Singleton
-    fun binding(): One = ImpOne()
+    fun getName(): String = "Souvik"
+
+    @Provides
+    @Singleton
+    fun binding(
+        name: String
+    ): One = ImpOne(name)
 }
