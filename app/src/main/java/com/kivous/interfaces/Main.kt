@@ -1,54 +1,42 @@
 package com.kivous.interfaces
 
 import android.util.Log
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Inject
+import javax.inject.Qualifier
 import javax.inject.Singleton
 
-interface One {
-    fun getName()
-}
-
-class ImpOne @Inject constructor(private val name: String) : One {
-    override fun getName() {
-        Log.d("CAR", "My name is $name")
-    }
-}
-
-class Main @Inject constructor(private val one: One) {
+class Main @Inject constructor(
+    @FName
+    private val fName: String,
+    @LName
+    private val lName: String
+) {
     fun getName() {
-        one.getName()
+        Log.d("TAG", "My name is $fName $lName")
     }
 }
 
-/*
-@Module
-@InstallIn(SingletonComponent::class)
-abstract class AppModule() {
-
-    @Binds
-    @Singleton
-    abstract fun binding(
-        impOne: ImpOne
-    ): One
-}
-*/
 
 @Module
 @InstallIn(SingletonComponent::class)
 class AppModule() {
+    @Provides
+    @FName
+    fun getFName(): String = "Souvik"
 
     @Provides
-    @Singleton
-    fun getName(): String = "Souvik"
-
-    @Provides
-    @Singleton
-    fun binding(
-        name: String
-    ): One = ImpOne(name)
+    @LName
+    fun getLName(): String = "Mondal"
 }
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class FName
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class LName
