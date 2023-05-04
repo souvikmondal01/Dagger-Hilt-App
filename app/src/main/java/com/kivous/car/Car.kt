@@ -5,11 +5,12 @@ import android.widget.Toast
 import javax.inject.Inject
 
 
-class Car {
+class Car @Inject constructor(private val engine: Engine, private val wheel: Wheel) {
 
-    @Inject
-    constructor()
     fun getCar() {
         Log.d("CAR", "Car is running...")
+        engine.getEngine()
+        wheel.getWheel()
     }
+
 }
