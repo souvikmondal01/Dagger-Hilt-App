@@ -3,6 +3,7 @@ package com.kivous.interfaces
 import android.util.Log
 import dagger.Binds
 import dagger.Module
+import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Inject
@@ -14,7 +15,7 @@ interface One {
 
 class ImpOne @Inject constructor() : One {
     override fun getName() {
-        Log.d("CAR", "My name is Souvik")
+        Log.d("CAR", "My name is Souvik Mondal")
     }
 }
 
@@ -24,6 +25,7 @@ class Main @Inject constructor(private val one: One) {
     }
 }
 
+/*
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class AppModule() {
@@ -33,4 +35,14 @@ abstract class AppModule() {
     abstract fun binding(
         impOne: ImpOne
     ): One
+}
+*/
+
+@Module
+@InstallIn(SingletonComponent::class)
+class AppModule() {
+
+    @Provides
+    @Singleton
+    fun binding(): One = ImpOne()
 }
